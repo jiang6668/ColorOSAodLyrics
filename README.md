@@ -2,15 +2,17 @@
 
 把 ColorOS 息屏显示里的音乐卡片改成极简实时歌词显示。
 
-## v0.2.0 设备专用一键包
+## v0.2.1 设备专用一键包
 
 # ⚠️ 只确认适用于下面这个版本，其他版本不要刷入这个 ZIP
 
 这个版本包含一个 Magisk / KernelSU / APatch 一键刷入包：
 
-`ColorOSAodLyrics-SystemUI-MagiskModule-device.zip`
+`ColorOSAodLyrics-SystemUI-MagiskModule-device-v0.2.1-fixed.zip`
 
 它直接挂载实机调试成功的 `SystemUI.apk` 补丁，用来让当前设备重启后仍然保持息屏歌词效果。
+
+v0.2.0 的 ZIP 由 Windows 打包，目录分隔符在手机上被识别成反斜杠文件名，导致 Magisk 无法按目录覆盖。v0.2.1 改用正确 ZIP 目录结构，并在启动脚本里显式 bind mount 补丁 APK。
 
 已验证设备信息：
 
@@ -27,11 +29,11 @@
 | SystemUI versionName | 16.99.12 |
 | SystemUI versionCode | 169912 |
 | SystemUI APK SHA256 | 50049b655f1c35c534d5d1814358c714a50145b7bb3f36216bd96bc89fcc36e1 |
-| 一键包 SHA256 | db48ba042e472a922ae767db65e4201b7c6b4e59a41c44d5bdbfe8d1de005b0d |
+| 一键包 SHA256 | 7addebb0e2d10dbff2443da9a8b80da1368f1ad4406fc137188211b0a2f824bd |
 
-如果你的机型、系统版本、SystemUI 版本任意一项不同，请不要刷 v0.2.0 的一键包。请看 v0.1.0 的 LSPosed 原型和源码，自行适配、编译、测试。
+如果你的机型、系统版本、SystemUI 版本任意一项不同，请不要刷 v0.2.1 的一键包。请看 v0.1.0 的 LSPosed 原型和源码，自行适配、编译、测试。
 
-## v0.2.0 一键包实现效果
+## v0.2.1 一键包实现效果
 
 - 息屏音乐卡片显示实时歌词。
 - 歌词可以随播放进度自动刷新。
@@ -41,10 +43,10 @@
 - 不依赖 LSPosed。
 - 不需要安装本仓库的 LSPosed APK。
 
-## v0.2.0 使用方法
+## v0.2.1 使用方法
 
 1. 确认你的设备信息和上表完全一致。
-2. 下载 `ColorOSAodLyrics-SystemUI-MagiskModule-device.zip`。
+2. 下载 `ColorOSAodLyrics-SystemUI-MagiskModule-device-v0.2.1-fixed.zip`。
 3. 在 Magisk / KernelSU / APatch 里刷入这个 ZIP。
 4. 重启手机。
 5. 播放音乐，进入息屏显示。

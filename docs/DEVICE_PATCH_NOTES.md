@@ -1,8 +1,10 @@
-# v0.2.0 实机补丁记录
+# v0.2.1 实机补丁记录
 
 ## 结论
 
-v0.2.0 是设备专用 SystemUI 补丁包，不是通用模块。它把实机调试成功的 `SystemUI.apk` 放入 Magisk / KernelSU / APatch 模块，通过系统分区镜像挂载实现开机自动生效。
+v0.2.1 是设备专用 SystemUI 补丁包，不是通用模块。它把实机调试成功的 `SystemUI.apk` 放入 Magisk / KernelSU / APatch 模块，并在启动脚本里显式 bind mount 到 SystemUI 位置，复现手动调试成功的路径。
+
+v0.2.0 的 ZIP 由 Windows 打包，目录分隔符在手机上被识别成反斜杠文件名，导致 Magisk 无法按目录覆盖。v0.2.1 改用正确 ZIP 目录结构。
 
 ## 已验证设备
 
@@ -21,7 +23,7 @@ v0.2.0 是设备专用 SystemUI 补丁包，不是通用模块。它把实机调
 | SystemUI versionName | 16.99.12 |
 | SystemUI versionCode | 169912 |
 | SystemUI APK SHA256 | 50049b655f1c35c534d5d1814358c714a50145b7bb3f36216bd96bc89fcc36e1 |
-| 一键包 SHA256 | db48ba042e472a922ae767db65e4201b7c6b4e59a41c44d5bdbfe8d1de005b0d |
+| 一键包 SHA256 | 7addebb0e2d10dbff2443da9a8b80da1368f1ad4406fc137188211b0a2f824bd |
 
 ## 绝对不要跨版本刷入
 
