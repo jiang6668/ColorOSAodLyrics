@@ -1,0 +1,14 @@
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+
+# Build artifacts kept out of source control by default.
+*.apk
+*.ap_
+*.aab
+
+# Local generated helper outputs.
+xposed-stubs/classes/
+xposed-stubs/sources.txt

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ColorOS AOD Lyrics</string>
+    <string name="xposed_description">Show live lyrics in ColorOS AOD media panel.</string>
+</resources>
