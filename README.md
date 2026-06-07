@@ -1,47 +1,73 @@
 # ColorOS AOD Lyrics
 
-ColorOS AOD Lyrics 是一个实验性 LSPosed 模块原型，用来把 ColorOS 息屏显示里的音乐卡片改成极简实时歌词显示。
+把 ColorOS 息屏显示里的音乐卡片改成极简实时歌词显示。
 
-当前原型来自一台 ColorOS 设备上的实测 SystemUI 补丁：隐藏专辑图、App 图标、频谱/引导图标和歌手行，只保留 AOD 音乐卡片中的歌词文字，并允许歌词自动刷新。
+## v0.2.0 设备专用一键包
 
-## 当前状态
+# ⚠️ 只确认适用于下面这个版本，其他版本不要刷入这个 ZIP
 
-- 推荐形态：LSPosed 模块。
-- 普通 App 单独安装：不能生效。普通 App 没有权限修改 SystemUI 的 AOD 视图。
-- Magisk/SystemUI APK 补丁：本机已验证可行，但只适合完全相同的 SystemUI 版本，不推荐直接给其他机型通刷。
-- 复用到其他 ColorOS 机型：需要同样存在 `com.oplusos.systemui.aod.mediapanel.AodMediaControlPanel` 这类 AOD 媒体面板类；如果类名或布局方法不同，需要改 hook 点。
+这个版本包含一个 Magisk / KernelSU / APatch 一键刷入包：
 
-## 依赖关系
+`ColorOSAodLyrics-SystemUI-MagiskModule-device.zip`
 
-- 需要 root + LSPosed。
-- 需要启用模块作用域到 `系统界面` / `com.android.systemui`。
-- 不强制依赖词幕模块，但建议搭配词幕或其他能向 SystemUI/状态栏提供歌词的模块。
-- 当前兼容的歌词来源：
-  - SystemUI 媒体数据里的歌词对象。
-  - `Lyric_Data` 广播。
-  - `Codex_AOD_LYRIC` 广播，extra 名为 `lyric`。
+它直接挂载实机调试成功的 `SystemUI.apk` 补丁，用来让当前设备重启后仍然保持息屏歌词效果。
 
-## 使用方法
+已验证设备信息：
 
-1. 安装构建出的 APK。
-2. 在 LSPosed 中启用模块。
+| 项目 | 值 |
+| --- | --- |
+| 品牌 | OPPO |
+| 机型 | PME110 |
+| 设备代号 | OP61C1L1 |
+| 系统显示版本 | PME110_16.0.7.202(CN01) |
+| Android 版本 | 16 / SDK 36 |
+| OPlus ROM | V16.1.0 |
+| 安全补丁 | 2026-04-01 |
+| SystemUI 包名 | com.android.systemui |
+| SystemUI versionName | 16.99.12 |
+| SystemUI versionCode | 169912 |
+| SystemUI APK SHA256 | 50049b655f1c35c534d5d1814358c714a50145b7bb3f36216bd96bc89fcc36e1 |
+| 一键包 SHA256 | db48ba042e472a922ae767db65e4201b7c6b4e59a41c44d5bdbfe8d1de005b0d |
+
+如果你的机型、系统版本、SystemUI 版本任意一项不同，请不要刷 v0.2.0 的一键包。请看 v0.1.0 的 LSPosed 原型和源码，自行适配、编译、测试。
+
+## v0.2.0 一键包实现效果
+
+- 息屏音乐卡片显示实时歌词。
+- 歌词可以随播放进度自动刷新。
+- 隐藏专辑图、QQ 音乐图标、小频谱图标、引导图标、歌手行。
+- 保留最多 2 行歌词显示。
+- 使用 3 行高度避免两行歌词上沿被裁切。
+- 不依赖 LSPosed。
+- 不需要安装本仓库的 LSPosed APK。
+
+## v0.2.0 使用方法
+
+1. 确认你的设备信息和上表完全一致。
+2. 下载 `ColorOSAodLyrics-SystemUI-MagiskModule-device.zip`。
+3. 在 Magisk / KernelSU / APatch 里刷入这个 ZIP。
+4. 重启手机。
+5. 播放音乐，进入息屏显示。
+
+如果刷入后 SystemUI 异常、黑屏或无法正常解锁，请从 Recovery、模块管理器安全模式，或 `/data/adb/modules` 删除模块。
+
+## v0.1.0 通用原型
+
+v0.1.0 是 LSPosed 模块原型，适合其他 ColorOS 玩家研究和自行适配：
+
+1. 安装 `ColorOSAodLyrics-lsposed-debug.apk`。
+2. 在 LSPosed 启用模块。
 3. 作用域选择 `系统界面` / `com.android.systemui`。
 4. 重启 SystemUI 或重启手机。
-5. 播放音乐，开启息屏显示，查看 AOD 音乐卡片。
 
-## 已知限制
+注意：v0.1.0 不是保证可用的成品，只是通用方向的原型。不同 ColorOS 版本的 AOD 类名、资源 ID、布局结构可能不同，需要二次适配。
 
-- ColorOS 各版本 AOD 类名和布局可能不同，模块可能需要适配。
-- 普通 Android 安装权限无法单独完成这个功能。
-- 如果系统音乐卡片没有出现，模块也没有可替换的 AOD 入口。
-- 如果歌词来源只在独立 App 进程里显示、没有传入 SystemUI，则模块拿不到歌词。
+## 项目文件
 
-## 本项目文件
-
-- `app/src/main/java/com/codex/colorosaodlyrics/HookEntry.java`：LSPosed 入口和核心 hook 逻辑。
-- `app/src/main/assets/xposed_init`：Xposed/LSPosed 入口声明。
-- `docs/IMPLEMENTATION.md`：实现细节和适配说明。
-- `docs/DEVICE_PATCH_NOTES.md`：本次实机 SystemUI 补丁方案记录。
+- `app/src/main/java/com/codex/colorosaodlyrics/HookEntry.java`：LSPosed 原型入口。
+- `docs/IMPLEMENTATION.md`：实现思路。
+- `docs/DEVICE_PATCH_NOTES.md`：v0.2.0 实机补丁记录。
+- `docs/BUILD_AND_TEST.md`：构建和测试说明。
 
 ## 致谢
 

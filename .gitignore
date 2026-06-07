@@ -12,3 +12,7 @@ local.properties
 # Local generated helper outputs.
 xposed-stubs/classes/
 xposed-stubs/sources.txt
+
+# Device-specific release package generated locally; publish as a GitHub Release asset.
+ColorOSAodLyrics-SystemUI-MagiskModule/
+ColorOSAodLyrics-SystemUI-MagiskModule-device.zip
