@@ -2,6 +2,12 @@
 
 把 ColorOS 息屏显示里的音乐卡片改成极简实时歌词显示。
 
+## 效果对比
+
+| 原息屏音乐卡片 | 息屏歌词样式 |
+| --- | --- |
+| ![原息屏音乐卡片](docs/assets/original-aod-style.jpg) | ![息屏歌词样式](docs/assets/aod-lyrics-style.jpg) |
+
 ## v0.2.2-safe 设备专用一键包
 
 # ⚠️ 只确认适用于下面这个版本，其他版本不要刷入这个 ZIP
